@@ -5,7 +5,7 @@ import { Language, Nullable } from 'types/common';
 
 import { Expand, PivotArrow } from 'components/other';
 
-import { useDeviceType, useMountEffect, useOutsideClick } from 'hooks';
+import { useBlockBodyScroll, useDeviceType, useMountEffect, useOutsideClick } from 'hooks';
 import * as ROUTER from 'router/const';
 import { useRootStore } from 'stores/initStore';
 
@@ -39,6 +39,8 @@ export const MobileMenu = observer(() => {
     } = useTranslation();
 
     useOutsideClick(menuRef, commonStore.isMenuOpen, commonStore.setMenuOpen, burgerRef);
+
+    useBlockBodyScroll(commonStore.isMenuOpen);
 
     const { isMobile } = useDeviceType();
 

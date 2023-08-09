@@ -37,7 +37,7 @@ export const Header = observer(() => {
 
     const { pathname } = useLocation();
 
-    const { isDesktop } = useDeviceType();
+    const { isMobile, isDesktop } = useDeviceType();
 
     /* При переходе на новую страницу скроллим вверх */
     useEffect(() => {
@@ -68,53 +68,73 @@ export const Header = observer(() => {
 
     return (
         <S.Wrapper>
-            <S.LinksWrapper>
-                <MenuLink url={ROUTER.MAIN_PAGE}>Main</MenuLink>
+            {isMobile ? (
+                <>
+                    <S.LinksWrapper>
+                        <S.Title>Currency app</S.Title>
+                    </S.LinksWrapper>
 
-                <MenuLink url={ROUTER.GOLD_PAGE}>Gold</MenuLink>
-            </S.LinksWrapper>
+                    <S.Burger
+                        id="burgerMenuButton"
+                        isMenuOpen={commonStore.isMenuOpen}
+                        onClick={() => commonStore.setMenuOpen(!commonStore.isMenuOpen)}
+                    >
+                        <S.Line />
+                        <S.Line />
+                        <S.Line />
+                        <S.Line />
+                    </S.Burger>
+                </>
+            ) : (
+                <>
+                    <S.LinksWrapper>
+                        <S.Title>Currency app</S.Title>
 
-            {/* TODO: временно скрываем */}
-            {/* <MenuLink url={ROUTER.CALCULATOR_PAGE}>Calculator</MenuLink> */}
+                        <MenuLink url={ROUTER.MAIN_PAGE}>Converter</MenuLink>
 
-            <S.RelativeBlock
-                ref={dropdownLanguageRef}
-                onMouseMove={onMouseMoveLanguage}
-                onMouseLeave={onMouseLeaveLanguage}
-            >
-                <S.LanguageWrapper
-                    onClick={() => !isDesktop && toggleLanguageHandler()}
-                    isOpen={isLanguageDropdownOpen}
-                >
-                    <S.LanguageIcon islight={commonStore.isLight ? 'true' : ''} />
-                </S.LanguageWrapper>
+                        <MenuLink url={ROUTER.GOLD_PAGE}>Gold</MenuLink>
+                    </S.LinksWrapper>
 
-                <S.DropdownContentWrapper
-                    isLight={commonStore.isLight}
-                    isOpen={isLanguageDropdownOpen}
-                >
-                    <S.DropdownContent isLight={commonStore.isLight}>
-                        {languagesOptions.map((item, index) => (
-                            <S.LanguageItemWrapper
-                                key={index}
-                                isLight={commonStore.isLight}
-                                isActiveItem={item.value === language}
-                                onClick={() => languageHandler(item.value)}
-                            >
-                                <S.LanguageIconWrapper>{item.icon}</S.LanguageIconWrapper>
+                    <S.RelativeBlock
+                        ref={dropdownLanguageRef}
+                        onMouseMove={onMouseMoveLanguage}
+                        onMouseLeave={onMouseLeaveLanguage}
+                    >
+                        <S.LanguageWrapper
+                            onClick={() => !isDesktop && toggleLanguageHandler()}
+                            isOpen={isLanguageDropdownOpen}
+                        >
+                            <S.LanguageIcon islight={commonStore.isLight ? 'true' : ''} />
+                        </S.LanguageWrapper>
 
-                                <S.LanguageText>{item.title}</S.LanguageText>
-                            </S.LanguageItemWrapper>
-                        ))}
-                    </S.DropdownContent>
-                </S.DropdownContentWrapper>
-            </S.RelativeBlock>
+                        <S.DropdownContentWrapper
+                            isLight={commonStore.isLight}
+                            isOpen={isLanguageDropdownOpen}
+                        >
+                            <S.DropdownContent isLight={commonStore.isLight}>
+                                {languagesOptions.map((item, index) => (
+                                    <S.LanguageItemWrapper
+                                        key={index}
+                                        isLight={commonStore.isLight}
+                                        isActiveItem={item.value === language}
+                                        onClick={() => languageHandler(item.value)}
+                                    >
+                                        <S.LanguageIconWrapper>{item.icon}</S.LanguageIconWrapper>
 
-            <S.SwitchStyled
-                isActive={commonStore.isLight}
-                setActive={commonStore.toggleTheme}
-                icon={commonStore.isLight ? <SunSVG /> : <MoonSVG />}
-            />
+                                        <S.LanguageText>{item.title}</S.LanguageText>
+                                    </S.LanguageItemWrapper>
+                                ))}
+                            </S.DropdownContent>
+                        </S.DropdownContentWrapper>
+                    </S.RelativeBlock>
+
+                    <S.SwitchStyled
+                        isActive={commonStore.isLight}
+                        setActive={commonStore.toggleTheme}
+                        icon={commonStore.isLight ? <SunSVG /> : <MoonSVG />}
+                    />
+                </>
+            )}
         </S.Wrapper>
     );
 });

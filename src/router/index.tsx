@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { observer } from 'mobx-react';
 
-import { Header } from 'components/core';
+import { Header, MobileMenu } from 'components/core';
 
 import * as PAGES from 'pages';
 import { useRootStore } from 'stores/initStore';
@@ -28,6 +28,8 @@ export const NavigationRouter = observer(() => {
             <Router>
                 <S.MainWrapper>
                     <Header />
+
+                    <MobileMenu />
 
                     <Routes>
                         <Route path={C.MAIN_PAGE} element={<PAGES.MainPage />} />

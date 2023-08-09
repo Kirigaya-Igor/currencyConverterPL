@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { Switch } from 'components/interactions';
@@ -29,6 +30,8 @@ export const Wrapper = styled.div`
 
     ${toEnd('mobile')} {
         top: 4px;
+
+        padding: 4px 4px 4px 16px;
     }
 `;
 
@@ -38,6 +41,12 @@ export const LinksWrapper = styled.div`
     gap: 8px;
 
     margin-right: auto;
+`;
+
+export const Title = styled.p`
+    margin-right: 8px;
+
+    font-size: ${theme.text.extraHuge.fontSize};
 `;
 
 export const SwitchStyled = styled(Switch)`
@@ -177,4 +186,100 @@ export const LanguageIconWrapper = styled.div`
 export const LanguageText = styled.p`
     font-weight: ${theme.text.small.fontWeight};
     font-size: ${theme.text.small.fontSize};
+`;
+
+export const Burger = styled.div<{ isMenuOpen: boolean }>`
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+
+    background-color: ${({ isMenuOpen }) =>
+        isMenuOpen ? theme.colors.primary : theme.colors.box13};
+
+    border-radius: 50%;
+
+    user-select: none;
+
+    cursor: pointer;
+
+    transition: all 0.4s ease-in-out;
+
+    & > span {
+        background-color: ${({ isMenuOpen }) => isMenuOpen && theme.colors.white};
+
+        &:nth-of-type(1) {
+            top: 13px;
+            left: 12px;
+
+            width: 16px;
+
+            ${({ isMenuOpen }) =>
+                isMenuOpen &&
+                css`
+                    top: 19px;
+                    width: 0px;
+                    left: 50%;
+                `}
+        }
+
+        &:nth-of-type(2) {
+            top: 19px;
+
+            ${({ isMenuOpen }) =>
+                isMenuOpen &&
+                css`
+                    left: 11px;
+
+                    width: 18px;
+
+                    transform: rotate(45deg);
+                `}
+        }
+
+        &:nth-of-type(3) {
+            top: 19px;
+
+            ${({ isMenuOpen }) =>
+                isMenuOpen &&
+                css`
+                    left: 11px;
+
+                    width: 18px;
+
+                    transform: rotate(-45deg);
+                `}
+        }
+
+        &:nth-of-type(4) {
+            top: 25px;
+            left: 12px;
+
+            width: 16px;
+
+            ${({ isMenuOpen }) =>
+                isMenuOpen &&
+                css`
+                    top: 19px;
+                    width: 0px;
+                    left: 50%;
+                `}
+        }
+    }
+`;
+
+export const Line = styled.span`
+    position: absolute;
+    left: 9px;
+
+    width: 22px;
+    height: 2px;
+
+    background-color: ${({ theme }) => theme.colors.hintText};
+
+    transition: all 0.4s ease-in-out;
+
+    pointer-events: none;
 `;

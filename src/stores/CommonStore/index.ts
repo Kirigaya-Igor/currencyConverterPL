@@ -11,11 +11,16 @@ export const CommonStore = (): ICommonStore => {
 
     return {
         isLight: !!storageTheme ? storageTheme === 'true' : false,
+        isMenuOpen: false,
 
         toggleTheme() {
             this.isLight = !this.isLight;
 
             persistStorage(isLightKey, this.isLight.toString());
+        },
+
+        setMenuOpen(bool) {
+            this.isMenuOpen = bool;
         },
 
         // async getAssetsRates() {

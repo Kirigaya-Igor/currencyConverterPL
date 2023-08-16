@@ -65,6 +65,8 @@ export const MobileMenu = observer(() => {
                     <S.LinksWrapper isLight={commonStore.isLight}>
                         <MenuLink url={ROUTER.MAIN_PAGE}>Converter</MenuLink>
 
+                        <MenuLink url={ROUTER.CURRENCIES_PAGE}>All currencies</MenuLink>
+
                         <MenuLink url={ROUTER.GOLD_PAGE}>Gold</MenuLink>
                     </S.LinksWrapper>
 

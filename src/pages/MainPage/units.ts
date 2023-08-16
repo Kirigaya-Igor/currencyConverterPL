@@ -1,32 +1,57 @@
 import styled from '@emotion/styled';
 
-import { theme } from 'styles';
+import { Modal, Paper } from 'components/containers';
+import { CircleButton, SearchInput } from 'components/interactions';
 
-export const TitleWrapper = styled.div`
-    width: 100%;
-    margin-bottom: 32px;
+import { theme, toEnd } from 'styles';
+
+import * as STYLE from '../units';
+
+export const PageWrapperStyled = styled(STYLE.PageWrapper)`
+    flex-direction: row;
+    gap: 32px;
+
+    ${toEnd('tablet')} {
+        flex-direction: column;
+    }
 `;
 
-export const InfoWrapper = styled.div`
+export const PaperStyled = styled(Paper)`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    gap: 16px;
 
-    width: 100%;
-    padding: 16px 8px;
-    margin-top: 16px;
-
-    background-color: ${theme.colors.box7};
-
-    border-radius: ${theme.borderRadiusSecondary};
+    height: max-content;
 `;
 
-export const InfoText = styled.p`
+export const CurrencyRatioText = styled.p`
     font-weight: ${theme.text.small.fontWeight};
-    font-size: ${theme.text.tiny.fontSize};
+    font-size: ${theme.text.normal.fontSize};
+`;
 
-    color: ${({ theme }) => theme.colors.text};
+export const EmptyText = styled(CurrencyRatioText)`
+    margin: 0 auto;
+`;
 
-    text-align: center;
+export const SearchInputStyled = styled(SearchInput)`
+    max-width: 250px;
+    margin-bottom: 16px;
+`;
+
+export const SearchInputModal = styled(SearchInput)`
+    margin-bottom: 16px;
+`;
+
+export const CircleButtonStyled = styled(CircleButton)`
+    margin-left: auto;
+`;
+
+export const ModalStyled = styled(Modal)`
+    height: 100%;
+`;
+
+export const CurrenciesWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 `;

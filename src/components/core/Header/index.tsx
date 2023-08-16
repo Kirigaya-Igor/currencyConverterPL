@@ -92,6 +92,8 @@ export const Header = observer(() => {
 
                         <MenuLink url={ROUTER.MAIN_PAGE}>Converter</MenuLink>
 
+                        <MenuLink url={ROUTER.CURRENCIES_PAGE}>All Currencies</MenuLink>
+
                         <MenuLink url={ROUTER.GOLD_PAGE}>Gold</MenuLink>
                     </S.LinksWrapper>
 

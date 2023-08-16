@@ -5,8 +5,11 @@ import { observer } from 'mobx-react';
 
 import { Header, MobileMenu } from 'components/core';
 
+import { FAVORITES_CURRENCIES_KEY } from 'const';
+import { useMountEffect } from 'hooks';
 import * as PAGES from 'pages';
 import { useRootStore } from 'stores/initStore';
+import { getStorage } from 'stores/utils';
 import { dark, light } from 'styles/themes';
 
 import * as C from './const';
@@ -16,6 +19,29 @@ export const NavigationRouter = observer(() => {
     const { commonStore } = useRootStore();
 
     const currentTheme = commonStore.isLight ? light : dark;
+
+    useMountEffect(() => {
+        (async () => {
+            await commonStore.getRatesA();
+            commonStore.getRatesB();
+        })();
+    });
+
+    useEffect(() => {
+        const storageRates = getStorage(FAVORITES_CURRENCIES_KEY, true);
+
+        if (
+            typeof storageRates === 'object' &&
+            storageRates.length > 0 &&
+            commonStore.rates.length > 0 &&
+            !commonStore.isRatesALoading &&
+            !commonStore.isRatesBLoading
+        ) {
+            commonStore.setFavoritesRates(
+                commonStore.rates.filter((item) => storageRates.includes(item.code)),
+            );
+        }
+    }, [commonStore.rates, commonStore.isRatesALoading, commonStore.isRatesBLoading]);
 
     useEffect(() => {
         document.body.style.color = commonStore.isLight ? '#092636' : '#ffffff';
@@ -34,7 +60,9 @@ export const NavigationRouter = observer(() => {
                     <Routes>
                         <Route path={C.MAIN_PAGE} element={<PAGES.MainPage />} />
 
-                        <Route path={C.GOLD_PAGE} element={<PAGES.MainPage />} />
+                        <Route path={C.CURRENCIES_PAGE} element={<PAGES.AllCurrencies />} />
+
+                        <Route path={C.GOLD_PAGE} element={<PAGES.GoldPage />} />
 
                         <Route path="*" element={<PAGES.MainPage />} />
                     </Routes>

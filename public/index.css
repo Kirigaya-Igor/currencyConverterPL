@@ -52,6 +52,8 @@ body {
     /* TODO: шрифт по дефолту */
     font-family: 'Inter', sans-serif;
 
+    color: #ffffff;
+    
     background-color: #1E2934;
 
     transition: background-color 0.3s ease-in-out;

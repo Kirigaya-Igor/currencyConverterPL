@@ -1,4 +1,7 @@
-// import * as API from 'api/common';
+import { runInAction } from 'mobx';
+
+import * as API from 'api/common';
+import { FAVORITES_CURRENCIES_KEY } from 'const';
 import { getStorage, persistStorage } from 'stores/utils';
 
 import { ICommonStore } from './types';
@@ -10,8 +13,15 @@ export const CommonStore = (): ICommonStore => {
     const storageTheme = getStorage(isLightKey);
 
     return {
+        isRatesALoading: false,
+        isRatesBLoading: false,
+
         isLight: !!storageTheme ? storageTheme === 'true' : false,
         isMenuOpen: false,
+
+        rates: [],
+        favoritesRates: [],
+        goldData: null,
 
         toggleTheme() {
             this.isLight = !this.isLight;
@@ -23,25 +33,71 @@ export const CommonStore = (): ICommonStore => {
             this.isMenuOpen = bool;
         },
 
-        // async getAssetsRates() {
-        //     try {
-        //         const res = await API.getRates();
+        setFavoritesRates(favoritesRates) {
+            this.favoritesRates = favoritesRates;
 
-        //         if (res.data) {
-        //             const formatedRates: Record<string, string> = {};
+            persistStorage(
+                FAVORITES_CURRENCIES_KEY,
+                favoritesRates.map((item) => item.code),
+                true,
+            );
+        },
 
-        //             for (const key in res.data) {
-        //                 formatedRates[key] = res.data[key].rate;
-        //             }
+        async getRatesA() {
+            try {
+                this.isRatesALoading = true;
 
-        //             runInAction(() => {
-        //                 this.assetsRates = formatedRates;
-        //             });
-        //         }
-        //     } catch (error) {
-        //         // TODO: take other
-        //         console.error(error as Error);
-        //     }
-        // },
+                const res = await API.getRatesA();
+
+                if (res.data) {
+                    runInAction(() => {
+                        this.rates = [...this.rates, ...res.data[0].rates];
+                    });
+                }
+            } catch (error) {
+                // TODO: take other
+                console.error(error as Error);
+            } finally {
+                runInAction(() => {
+                    this.isRatesALoading = false;
+                });
+            }
+        },
+
+        async getRatesB() {
+            try {
+                this.isRatesBLoading = true;
+
+                const res = await API.getRatesB();
+
+                if (res.data) {
+                    runInAction(() => {
+                        this.rates = [...this.rates, ...res.data[0].rates];
+                    });
+                }
+            } catch (error) {
+                // TODO: take other
+                console.error(error as Error);
+            } finally {
+                runInAction(() => {
+                    this.isRatesBLoading = false;
+                });
+            }
+        },
+
+        async getGoldPrice() {
+            try {
+                const res = await API.getGoldPrice();
+
+                if (res.data) {
+                    runInAction(() => {
+                        this.goldData = res.data[0];
+                    });
+                }
+            } catch (error) {
+                // TODO: take other
+                console.error(error as Error);
+            }
+        },
     };
 };

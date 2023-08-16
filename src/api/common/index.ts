@@ -11,3 +11,9 @@ export const getRatesB = () => {
         url: `/exchangerates/tables/b`,
     });
 };
+
+export const getGoldPrice = () => {
+    return Api.get({
+        url: `/cenyzlota`,
+    });
+};

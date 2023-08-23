@@ -86,6 +86,16 @@ export const MainPage = observer(() => {
             setFirstInputValue(deleteZeros((+numValue / selectedCurrencie.mid).toFixed(5)));
     };
 
+    const favoritesHandler = (rate: IRate) => {
+        if (commonStore.favoritesRates.some((item) => item.code === rate.code)) {
+            commonStore.setFavoritesRates(
+                commonStore.favoritesRates.filter((item) => item.code !== rate.code),
+            );
+        } else {
+            commonStore.setFavoritesRates([...commonStore.favoritesRates, rate]);
+        }
+    };
+
     return (
         <S.PageWrapperStyled>
             <S.PaperStyled>
@@ -180,7 +190,9 @@ export const MainPage = observer(() => {
 
                                           setChangeModalOpen(false);
                                       }
-                                    : undefined
+                                    : () => {
+                                          favoritesHandler(rate);
+                                      }
                             }
                             {...{ rate }}
                         />

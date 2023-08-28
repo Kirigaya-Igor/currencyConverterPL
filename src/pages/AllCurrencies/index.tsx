@@ -64,7 +64,7 @@ export const AllCurrencies = observer(() => {
                                       <S.ChartWrapper>
                                           <ReactECharts
                                               style={{ height: '530px', width: '100%' }}
-                                              option={getChartOptions(config)}
+                                              option={getChartOptions(config, commonStore.isLight)}
                                           />
                                       </S.ChartWrapper>
                                   </Expand>

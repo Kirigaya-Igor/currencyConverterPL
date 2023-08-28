@@ -5,7 +5,7 @@ export interface IChartOptions {
     rateCode: string;
 }
 
-export const getChartOptions = (data: IChartOptions) => {
+export const getChartOptions = (data: IChartOptions, isLight?: boolean) => {
     const minY = +(Math.min(...data.yData) - 0.1).toFixed(2);
 
     return {
@@ -27,7 +27,7 @@ export const getChartOptions = (data: IChartOptions) => {
             itemHeight: 0,
             itemGap: 15,
             textStyle: {
-                color: 'white',
+                color: isLight ? 'black' : 'white',
                 fontSize: 15,
             },
             selectedMode: false,
@@ -43,12 +43,13 @@ export const getChartOptions = (data: IChartOptions) => {
             },
             axisLine: {
                 lineStyle: {
-                    color: 'white',
+                    color: isLight ? 'black' : 'white',
                 },
             },
             axisLabel: {
                 rotate: 25,
                 margin: 20,
+                color: isLight ? 'black' : 'white',
             },
             splitNumber: 10,
         },
@@ -65,7 +66,7 @@ export const getChartOptions = (data: IChartOptions) => {
             },
             axisLabel: {
                 formatter: '{value}',
-                color: 'white',
+                color: isLight ? 'black' : 'white',
                 margin: 24,
             },
             axisTick: {
@@ -120,7 +121,7 @@ export const getChartOptions = (data: IChartOptions) => {
                         show: false,
                     },
                     lineStyle: {
-                        color: 'white',
+                        color: isLight ? 'black' : 'white',
                         type: 'solid',
                     },
                     data: [{ yAxis: data.currentPrice }, { xAxis: 'min' }],

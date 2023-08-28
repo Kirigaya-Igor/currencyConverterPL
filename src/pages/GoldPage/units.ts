@@ -20,3 +20,8 @@ export const Date = styled.p`
 
     transform: translateY(5px);
 `;
+
+export const ChartWrapper = styled.div`
+    width: 100%;
+    margin: 0 auto;
+`;

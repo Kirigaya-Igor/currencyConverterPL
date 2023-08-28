@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import ReactECharts from 'echarts-for-react';
 import { observer } from 'mobx-react';
+import { Nullable } from 'types/common';
 
-import { CurrencyItem, Skeleton } from 'components/other';
+import { CurrencyItem, Expand, Skeleton } from 'components/other';
 
+import { IRate } from 'stores/CommonStore';
 import { useRootStore } from 'stores/initStore';
+import { getChartOptions } from 'utils';
 
 import * as STYLE from '../units';
 
@@ -13,6 +17,7 @@ export const AllCurrencies = observer(() => {
     const { commonStore } = useRootStore();
 
     const [currencies, setCurrencies] = useState(commonStore.rates);
+    const [selectedRate, setSelectedRate] = useState<Nullable<IRate>>(null);
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -26,6 +31,23 @@ export const AllCurrencies = observer(() => {
         );
     }, [searchValue, commonStore.rates]);
 
+    useEffect(() => {
+        if (!!selectedRate) {
+            commonStore.getRateForChart(selectedRate.table, selectedRate.code);
+        }
+    }, [selectedRate]);
+
+    const config = {
+        xData: commonStore.ratesChartData.map((item) => item.effectiveDate),
+        yData: commonStore.ratesChartData.map((item) => item.mid),
+        currentPrice: +(selectedRate?.mid || 0),
+        rateCode: selectedRate?.code || '',
+    };
+
+    const chartToggle = (rate: IRate) => {
+        setSelectedRate(selectedRate?.code === rate.code ? null : rate);
+    };
+
     return (
         <STYLE.PageWrapper>
             <S.PaperStyled>
@@ -33,9 +55,22 @@ export const AllCurrencies = observer(() => {
 
                 {commonStore.isRatesALoading || commonStore.isRatesBLoading
                     ? Array.from({ length: 10 }, (_, i) => <Skeleton key={i} height={43} />)
-                    : currencies.map((rate, i) => (
-                          <CurrencyItem key={i} withFavorites {...{ rate }} />
-                      ))}
+                    : currencies.map((rate, i) => {
+                          return (
+                              <S.FlexColumn key={i}>
+                                  <CurrencyItem onClick={() => chartToggle(rate)} {...{ rate }} />
+
+                                  <Expand isOpen={selectedRate?.code === rate.code}>
+                                      <S.ChartWrapper>
+                                          <ReactECharts
+                                              style={{ height: '530px', width: '100%' }}
+                                              option={getChartOptions(config)}
+                                          />
+                                      </S.ChartWrapper>
+                                  </Expand>
+                              </S.FlexColumn>
+                          );
+                      })}
             </S.PaperStyled>
         </STYLE.PageWrapper>
     );

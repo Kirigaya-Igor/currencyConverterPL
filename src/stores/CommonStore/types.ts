@@ -7,8 +7,10 @@ export interface ICommonStore {
     isLight: boolean;
     isMenuOpen: boolean;
     rates: IRate[];
+    ratesChartData: IRatesChartData[];
     favoritesRates: IRate[];
     goldData: Nullable<IGoldPrice>;
+    goldChartData: IGoldPrice[];
 
     toggleTheme: () => void;
     setMenuOpen: (bool: boolean) => void;
@@ -17,11 +19,19 @@ export interface ICommonStore {
     getRatesA: () => Promise<any> | unknown;
     getRatesB: () => Promise<any> | unknown;
     getGoldPrice: () => Promise<any> | unknown;
+    getGoldForChart: () => Promise<any> | unknown;
+    getRateForChart: (table: string, rateCode: string) => Promise<any> | unknown;
 }
 
 export interface IRate {
     code: string;
     currency: string;
+    mid: number;
+    table: string;
+}
+export interface IRatesChartData {
+    no: string;
+    effectiveDate: string;
     mid: number;
 }
 

@@ -17,3 +17,15 @@ export const getGoldPrice = () => {
         url: `/cenyzlota`,
     });
 };
+
+export const getRateForChart = (table: string, rateCode: string) => {
+    return Api.get({
+        url: `/exchangerates/rates/${table}/${rateCode}/last/255`,
+    });
+};
+
+export const getGoldForChart = () => {
+    return Api.get({
+        url: `/cenyzlota/last/255`,
+    });
+};

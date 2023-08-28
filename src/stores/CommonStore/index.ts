@@ -20,8 +20,12 @@ export const CommonStore = (): ICommonStore => {
         isMenuOpen: false,
 
         rates: [],
+        ratesChartData: [],
+
         favoritesRates: [],
+
         goldData: null,
+        goldChartData: [],
 
         toggleTheme() {
             this.isLight = !this.isLight;
@@ -51,7 +55,10 @@ export const CommonStore = (): ICommonStore => {
 
                 if (res.data) {
                     runInAction(() => {
-                        this.rates = [...this.rates, ...res.data[0].rates];
+                        this.rates = [
+                            ...this.rates,
+                            ...res.data[0].rates.map((item: any) => ({ ...item, table: 'A' })),
+                        ];
                     });
                 }
             } catch (error) {
@@ -72,7 +79,10 @@ export const CommonStore = (): ICommonStore => {
 
                 if (res.data) {
                     runInAction(() => {
-                        this.rates = [...this.rates, ...res.data[0].rates];
+                        this.rates = [
+                            ...this.rates,
+                            ...res.data[0].rates.map((item: any) => ({ ...item, table: 'B' })),
+                        ];
                     });
                 }
             } catch (error) {
@@ -92,6 +102,36 @@ export const CommonStore = (): ICommonStore => {
                 if (res.data) {
                     runInAction(() => {
                         this.goldData = res.data[0];
+                    });
+                }
+            } catch (error) {
+                // TODO: take other
+                console.error(error as Error);
+            }
+        },
+
+        async getGoldForChart() {
+            try {
+                const res = await API.getGoldForChart();
+
+                if (res.data) {
+                    runInAction(() => {
+                        this.goldChartData = res.data;
+                    });
+                }
+            } catch (error) {
+                // TODO: take other
+                console.error(error as Error);
+            }
+        },
+
+        async getRateForChart(table, rateCode) {
+            try {
+                const res = await API.getRateForChart(table, rateCode);
+
+                if (res.data) {
+                    runInAction(() => {
+                        this.ratesChartData = res.data.rates;
                     });
                 }
             } catch (error) {

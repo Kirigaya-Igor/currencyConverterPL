@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactECharts from 'echarts-for-react';
 import { observer } from 'mobx-react';
 
@@ -15,6 +16,8 @@ import * as S from './units';
 export const GoldPage = observer(() => {
     const { commonStore } = useRootStore();
 
+    const { t } = useTranslation();
+
     useMountEffect(() => {
         commonStore.getGoldPrice();
         commonStore.getGoldForChart();
@@ -30,7 +33,7 @@ export const GoldPage = observer(() => {
     return (
         <STYLE.PageWrapper>
             <S.TitleWrapper>
-                <Title>Wyliczona w NBP cena 1 g złota (w próbie 1000)</Title>
+                <Title>{t('goldPage.title')}</Title>
 
                 {!!commonStore.goldData ? (
                     <>

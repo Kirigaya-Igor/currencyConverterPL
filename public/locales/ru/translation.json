@@ -1,6 +1,23 @@
 {
-    "test": "тест",
-    "aaa": {
-        "bbb": "привет"
+    "test": "Конвертер валют",
+    "Search": "Поиск",
+    "header": {
+        "Currency app": "Конвертер валют",
+        "Converter": "Конвертер",
+        "All Currencies": "Все валюты",
+        "Gold": "Золото"
+    },
+    "menu": {
+        "Switch theme": "Сменить тему",
+        "Change language": "Сменить язык"
+    },
+    "mainPage": {
+        "Change currency": "Сменить валюту",
+        "Add favorites": "Добавить в избраное",
+        "No favorites currencies": "Нет избранных валют",
+        "Select favorites currencies": "Выберите избранные валюты"
+    },
+    "goldPage": {
+        "title": "Рассчитанная в NBP цена 1г золота (в пробе 1000)"
     }
 }

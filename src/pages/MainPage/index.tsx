@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react';
 import { Nullable } from 'types/common';
 
@@ -29,6 +30,8 @@ export const MainPage = observer(() => {
     const [modalSearchValue, setModalSearchValue] = useState('');
 
     const [isChangeModalOpen, setChangeModalOpen] = useState(false);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         setFavoritesRates(
@@ -119,7 +122,7 @@ export const MainPage = observer(() => {
                             )}
 
                             <CircleButton size="small" onClick={() => setChangeModalOpen(true)}>
-                                Change currencie
+                                {t('mainPage.Change currency')}
                             </CircleButton>
                         </FlexBetweenWrapper>
 
@@ -151,7 +154,7 @@ export const MainPage = observer(() => {
                     <S.SearchInputStyled {...{ searchValue, setSearchValue }} />
 
                     <S.CircleButtonStyled size="small" onClick={() => setFavoritesModalOpen(true)}>
-                        Add favorites
+                        {t('mainPage.Add favorites')}
                     </S.CircleButtonStyled>
                 </FlexAlignCenterWrapper>
 
@@ -165,13 +168,19 @@ export const MainPage = observer(() => {
                               {...{ rate }}
                           />
                       ))
-                    : isFavoritesLoaded && <S.EmptyText>No favorites currencies</S.EmptyText>}
+                    : isFavoritesLoaded && (
+                          <S.EmptyText>{t('mainPage.No favorites currencies')}</S.EmptyText>
+                      )}
             </S.PaperStyled>
 
             <S.ModalStyled
                 isVisible={isFavoritesModalOpen || isChangeModalOpen}
                 setVisible={isFavoritesModalOpen ? setFavoritesModalOpen : setChangeModalOpen}
-                title="Select favorites currencies"
+                title={
+                    isFavoritesModalOpen
+                        ? t('mainPage.Select favorites currencies')
+                        : t('mainPage.Change currency')
+                }
             >
                 <S.CurrenciesWrapper>
                     <S.SearchInputModal

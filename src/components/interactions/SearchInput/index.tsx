@@ -1,4 +1,5 @@
 import React, { forwardRef, RefObject, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react';
 
 import { Loader } from 'components/core';
@@ -19,6 +20,8 @@ export const SearchInput = observer(
         autofocus && useFocusInput(inputElementRef, props.focusTrigger);
 
         const [isInputFocused, setInputFocused] = useState(false);
+
+        const { t } = useTranslation();
 
         const clearInput = () => {
             props.setSearchValue('');
@@ -47,7 +50,7 @@ export const SearchInput = observer(
                     onChange={(e) => props.setSearchValue(e.target.value)}
                     onFocus={() => setInputFocused(true)}
                     onBlur={() => setInputFocused(false)}
-                    placeholder={props.placeholder || 'Search'}
+                    placeholder={props.placeholder || t('Search')}
                     ref={inputElementRef}
                 />
 

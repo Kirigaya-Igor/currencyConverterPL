@@ -35,6 +35,7 @@ export const MobileMenu = observer(() => {
     const burgerRef = useRef<Nullable<HTMLElement>>(null);
 
     const {
+        t,
         i18n: { language, changeLanguage },
     } = useTranslation();
 
@@ -63,16 +64,18 @@ export const MobileMenu = observer(() => {
             <Expand isOpen={commonStore.isMenuOpen}>
                 <S.ExpandContent ref={menuRef}>
                     <S.LinksWrapper isLight={commonStore.isLight}>
-                        <MenuLink url={ROUTER.MAIN_PAGE}>Converter</MenuLink>
+                        <MenuLink url={ROUTER.MAIN_PAGE}>{t('header.Converter')}</MenuLink>
 
-                        <MenuLink url={ROUTER.CURRENCIES_PAGE}>All currencies</MenuLink>
+                        <MenuLink url={ROUTER.CURRENCIES_PAGE}>
+                            {t('header.All Currencies')}
+                        </MenuLink>
 
-                        <MenuLink url={ROUTER.GOLD_PAGE}>Gold</MenuLink>
+                        <MenuLink url={ROUTER.GOLD_PAGE}>{t('header.Gold')}</MenuLink>
                     </S.LinksWrapper>
 
                     <S.LanguagesWrapper isLight={commonStore.isLight}>
                         <S.SwitchWrapper onClick={commonStore.toggleTheme}>
-                            <S.SwitchName>Switch theme</S.SwitchName>
+                            <S.SwitchName>{t('menu.Switch theme')}</S.SwitchName>
 
                             <S.SwitchStyled
                                 isActive={commonStore.isLight}
@@ -83,7 +86,7 @@ export const MobileMenu = observer(() => {
                         <S.LanguageToggleWrapper
                             onClick={() => setLanguageDropdownOpen(!isLanguageDropdownOpen)}
                         >
-                            <S.SwitchName>Change language</S.SwitchName>
+                            <S.SwitchName>{t('menu.Change language')}</S.SwitchName>
 
                             <PivotArrow
                                 isActive={isLanguageDropdownOpen}

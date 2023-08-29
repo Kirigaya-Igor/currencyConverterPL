@@ -1,0 +1,23 @@
+{
+    "test": "Konwerter walut",
+    "Search": "Szukaj",
+    "header": {
+        "Currency app": "Konwerter walut",
+        "Converter": "Konwerter",
+        "All Currencies": "Wszystkie Waluty",
+        "Gold": "Złoto"
+    },
+    "menu": {
+        "Switch theme": "Zmień widok",
+        "Change language": "Zmień język"
+    },
+    "mainPage": {
+        "Change currency": "Zmień walutę",
+        "Add favorites": "Dodaj do ulubionych",
+        "No favorites currencies": "Brak ulubionych walut",
+        "Select favorites currencies": "Wybierz ulubione waluty"
+    },
+    "goldPage": {
+        "title": "Wyliczona w NBP cena 1 g złota (w próbie 1000)"
+    }
+}

@@ -45,6 +45,7 @@ export const Header = observer(() => {
     }, [pathname]);
 
     const {
+        t,
         i18n: { language, changeLanguage },
     } = useTranslation();
 
@@ -71,7 +72,7 @@ export const Header = observer(() => {
             {isMobile ? (
                 <>
                     <S.LinksWrapper>
-                        <S.Title>Currency app</S.Title>
+                        <S.Title>{t('header.Currency app')}</S.Title>
                     </S.LinksWrapper>
 
                     <S.Burger
@@ -88,13 +89,15 @@ export const Header = observer(() => {
             ) : (
                 <>
                     <S.LinksWrapper>
-                        <S.Title>Currency app</S.Title>
+                        <S.Title>{t('header.Currency app')}</S.Title>
 
-                        <MenuLink url={ROUTER.MAIN_PAGE}>Converter</MenuLink>
+                        <MenuLink url={ROUTER.MAIN_PAGE}>{t('header.Converter')}</MenuLink>
 
-                        <MenuLink url={ROUTER.CURRENCIES_PAGE}>All Currencies</MenuLink>
+                        <MenuLink url={ROUTER.CURRENCIES_PAGE}>
+                            {t('header.All Currencies')}
+                        </MenuLink>
 
-                        <MenuLink url={ROUTER.GOLD_PAGE}>Gold</MenuLink>
+                        <MenuLink url={ROUTER.GOLD_PAGE}>{t('header.Gold')}</MenuLink>
                     </S.LinksWrapper>
 
                     <S.RelativeBlock

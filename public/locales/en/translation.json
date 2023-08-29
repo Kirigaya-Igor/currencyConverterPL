@@ -1,6 +1,23 @@
 {
-    "test": "test",
-    "aaa": {
-        "bbb": "hello"
+    "test": "Currency app",
+    "Search": "Search",
+    "header": {
+        "Currency app": "Currency app",
+        "Converter": "Converter",
+        "All Currencies": "All Currencies",
+        "Gold": "Gold"        
+    },
+    "menu": {
+        "Switch theme": "Switch theme",
+        "Change language": "Change language"
+    },
+    "mainPage": {
+        "Change currency": "Change currency",
+        "Add favorites": "Add to favorites",
+        "No favorites currencies": "No favorites currencies",
+        "Select favorites currencies": "Select favorites currencies"
+    },
+    "goldPage": {
+        "title": "The price of 1g of gold calculated in the NBP (in 1000 samples)"
     }
 }

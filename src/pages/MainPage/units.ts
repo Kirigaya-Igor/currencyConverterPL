@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Modal, Paper } from 'components/containers';
 import { CircleButton, SearchInput } from 'components/interactions';
 
-import { theme, toEnd } from 'styles';
+import { FlexAlignCenterWrapper, FlexBetweenWrapper, theme, toEnd } from 'styles';
 
 import * as STYLE from '../units';
 
@@ -24,6 +24,15 @@ export const PaperStyled = styled(Paper)`
     height: max-content;
 `;
 
+export const CurrencyRatioWrapper = styled(FlexBetweenWrapper)`
+    ${toEnd('mobile')} {
+        flex-direction: column;
+        gap: 16px;
+
+        max-width: 100%;
+    }
+`;
+
 export const CurrencyRatioText = styled.p`
     font-weight: ${theme.text.small.fontWeight};
     font-size: ${theme.text.normal.fontSize};
@@ -33,9 +42,23 @@ export const EmptyText = styled(CurrencyRatioText)`
     margin: 0 auto;
 `;
 
+export const SearchInputWrapper = styled(FlexAlignCenterWrapper)`
+    ${toEnd('mobile')} {
+        flex-direction: column-reverse;
+        gap: 16px;
+
+        max-width: 100%;
+    }
+`;
+
 export const SearchInputStyled = styled(SearchInput)`
     max-width: 250px;
     margin-bottom: 16px;
+
+    ${toEnd('mobile')} {
+        max-width: 100%;
+        margin-bottom: 0;
+    }
 `;
 
 export const SearchInputModal = styled(SearchInput)`
@@ -44,6 +67,10 @@ export const SearchInputModal = styled(SearchInput)`
 
 export const CircleButtonStyled = styled(CircleButton)`
     margin-left: auto;
+
+    ${toEnd('mobile')} {
+        width: 100%;
+    }
 `;
 
 export const ModalStyled = styled(Modal)`

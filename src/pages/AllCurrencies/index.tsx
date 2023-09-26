@@ -5,6 +5,7 @@ import { Nullable } from 'types/common';
 
 import { CurrencyItem, Expand, Skeleton } from 'components/other';
 
+import { useDeviceType } from 'hooks';
 import { IRate } from 'stores/CommonStore';
 import { useRootStore } from 'stores/initStore';
 import { getChartOptions } from 'utils';
@@ -20,6 +21,8 @@ export const AllCurrencies = observer(() => {
     const [selectedRate, setSelectedRate] = useState<Nullable<IRate>>(null);
 
     const [searchValue, setSearchValue] = useState('');
+
+    const { isDesktop } = useDeviceType();
 
     useEffect(() => {
         setCurrencies(
@@ -60,14 +63,19 @@ export const AllCurrencies = observer(() => {
                               <S.FlexColumn key={i}>
                                   <CurrencyItem onClick={() => chartToggle(rate)} {...{ rate }} />
 
-                                  <Expand isOpen={selectedRate?.code === rate.code}>
-                                      <S.ChartWrapper>
-                                          <ReactECharts
-                                              style={{ height: '530px', width: '100%' }}
-                                              option={getChartOptions(config, commonStore.isLight)}
-                                          />
-                                      </S.ChartWrapper>
-                                  </Expand>
+                                  {isDesktop && (
+                                      <Expand isOpen={selectedRate?.code === rate.code}>
+                                          <S.ChartWrapper>
+                                              <ReactECharts
+                                                  style={{ height: '530px', width: '100%' }}
+                                                  option={getChartOptions(
+                                                      config,
+                                                      commonStore.isLight,
+                                                  )}
+                                              />
+                                          </S.ChartWrapper>
+                                      </Expand>
+                                  )}
                               </S.FlexColumn>
                           );
                       })}

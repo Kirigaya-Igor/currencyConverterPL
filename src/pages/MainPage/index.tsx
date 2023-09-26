@@ -8,7 +8,6 @@ import { CurrencyItem, Skeleton } from 'components/other';
 
 import { IRate } from 'stores/CommonStore';
 import { useRootStore } from 'stores/initStore';
-import { FlexAlignCenterWrapper, FlexBetweenWrapper } from 'styles';
 import { deleteZeros, replaceNumInput } from 'utils';
 
 import * as S from './units';
@@ -116,7 +115,7 @@ export const MainPage = observer(() => {
                             blurHandler={() => !firstInputValue && secondInputHandler('0')}
                         />
 
-                        <FlexBetweenWrapper>
+                        <S.CurrencyRatioWrapper>
                             {!!selectedCurrencie && (
                                 <S.CurrencyRatioText>{`1 ${selectedCurrencie.code} = ${selectedCurrencie.mid} PLN`}</S.CurrencyRatioText>
                             )}
@@ -124,7 +123,7 @@ export const MainPage = observer(() => {
                             <CircleButton size="small" onClick={() => setChangeModalOpen(true)}>
                                 {t('mainPage.Change currency')}
                             </CircleButton>
-                        </FlexBetweenWrapper>
+                        </S.CurrencyRatioWrapper>
 
                         <Input
                             value={secondInputValue}
@@ -150,13 +149,13 @@ export const MainPage = observer(() => {
             </S.PaperStyled>
 
             <S.PaperStyled>
-                <FlexAlignCenterWrapper gap={32} isCenter={false}>
+                <S.SearchInputWrapper gap={32} isCenter={false}>
                     <S.SearchInputStyled {...{ searchValue, setSearchValue }} />
 
                     <S.CircleButtonStyled size="small" onClick={() => setFavoritesModalOpen(true)}>
                         {t('mainPage.Add favorites')}
                     </S.CircleButtonStyled>
-                </FlexAlignCenterWrapper>
+                </S.SearchInputWrapper>
 
                 {(commonStore.isRatesALoading || commonStore.isRatesBLoading) && !isFavoritesLoaded
                     ? Array.from({ length: 5 }, (_, i) => <Skeleton key={i} height={43} />)

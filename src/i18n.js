@@ -9,7 +9,8 @@ i18next
     .use(LanguageDetector)
     .init({
         supportedLngs: ['en', 'ru', 'pl'],
-        fallback: 'pl',
+        fallback: 'en',
+        lng: 'en',
         debug: false,
         detection: {
             order: ['cookie', 'localStorage'],

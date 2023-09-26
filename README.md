@@ -1,4 +1,4 @@
-# Нou can watch the demo [here](https://converter-pl.netlify.app/).
+# Нou can watch the demo [here](https://converter-pl.netlify.app/){:target="_blank"}.
 
 # Getting Started with Create React App
 

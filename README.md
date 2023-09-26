@@ -1,4 +1,4 @@
-# Нou can watch the demo [here](https://converter-pl-by-igor-shyian.netlify.app/).
+# You can watch the demo [here](https://converter-pl-by-igor-shyian.netlify.app/).
 
 # Getting Started with Create React App
 

@@ -13,7 +13,7 @@ import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
-const HOST = 'https://api.nbp.pl/api';
+const HOST = 'https://api.nbp.pl';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -58,8 +58,9 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
     // Add in any other file extensions or routing criteria as needed.
-    // @ts-ignore
-    ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
+    ({ url }) =>
+        url.origin === self.location.origin &&
+        (url.pathname.endsWith('.png') || url.pathname.endsWith('.ico')),
     // Customize this strategy as needed, e.g., by changing to CacheFirst.
     new StaleWhileRevalidate({
         cacheName: 'images',
@@ -83,6 +84,48 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 
+// Cache static files like CSS and JS
+registerRoute(
+    ({ request }) => request.destination === 'script' || request.destination === 'style',
+    new StaleWhileRevalidate({
+        cacheName: 'static-resources',
+        plugins: [new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 * 7 })],
+    }),
+);
+
+// Cache manifest.json
+registerRoute(
+    ({ url }) => url.pathname.endsWith('/manifest.json'),
+    new NetworkFirst({
+        cacheName: 'manifest-cache',
+        plugins: [new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 * 7 })],
+    }),
+);
+
+// Cache locales
+registerRoute(
+    ({ url }) => url.pathname.endsWith('/translation.json'),
+    new StaleWhileRevalidate({
+        cacheName: 'translations',
+        plugins: [new ExpirationPlugin({ maxAgeSeconds: 60 * 60 * 24 * 7 })],
+    }),
+);
+
+// Cache fonts
+registerRoute(
+    ({ url }) =>
+        url.origin === self.location.origin && url.pathname.match(/\.(?:woff2|woff|ttf|otf|eot)$/),
+    new StaleWhileRevalidate({
+        cacheName: 'fonts',
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 7,
+            }),
+        ],
+    }),
+);
+
 // Cache API responses with the CacheFirst strategy.
 registerRoute(
     ({ url }) => url.origin === HOST,
@@ -93,35 +136,20 @@ registerRoute(
             new CacheableResponsePlugin({ statuses: [200] }), // Only cache successful responses.
         ],
     }),
-);
-
-// Serve cached responses while revalidating them with the network using the StaleWhileRevalidate strategy.
-registerRoute(
-    ({ url }) => url.origin === HOST,
-    new NetworkFirst({
-        cacheName: 'dynamic-cache',
-        plugins: [
-            new ExpirationPlugin({ maxEntries: 50 }), // Limit the cache size.
-            new CacheableResponsePlugin({ statuses: [200] }), // Only cache successful responses.
-        ],
-    }),
+    'GET',
 );
 
 // auto update
-// @ts-ignore
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        // @ts-ignore
         self.skipWaiting().then(() => {
             console.log('Service Worker has been installed and skipWaiting() called');
         }),
     );
 });
 
-// @ts-ignore
 self.addEventListener('activate', (event) => {
     event.waitUntil(
-        // @ts-ignore
         self.clients.claim().then(() => {
             console.log('Service Worker has been activated and clients.claim() called');
         }),

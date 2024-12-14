@@ -59,7 +59,8 @@ instanceOfAxios.interceptors.response.use(
         error.errorText = C.ERROR_NETWORK;
 
         switch (status) {
-            case 504 || 502:
+            case 504:
+            case 502:
                 error.errorText = C.ERROR_504_OR_502;
                 break;
 

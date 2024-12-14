@@ -17,7 +17,7 @@
         "experimentalDecorators": true,
         "skipLibCheck": true,
         "declaration": false,
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": ["dom", "dom.iterable", "esnext", "webworker"],
         "moduleResolution": "node",
         "typeRoots": ["src/types/**/*.d.ts", "node_modules/@types"]
     },

@@ -1,27 +1,27 @@
 @font-face {
     font-family: 'Inter';
-    src: url('/public/fonts/Inter-Medium.ttf') format('truetype');
+    src: url('/fonts/Inter-Medium.ttf') format('truetype');
     font-weight: 500;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Inter';
-    src: url('/public/fonts/Inter-SemiBold.ttf') format('truetype');
+    src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Gilroy';
-    src: url('/public/fonts/Gilroy-medium.ttf') format('truetype');
+    src: url('/fonts/Gilroy-medium.ttf') format('truetype');
     font-weight: 500;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Gilroy';
-    src: url('/public/fonts/Gilroy-SemiBold.ttf') format('truetype');
+    src: url('/fonts/Gilroy-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-display: swap;
 }
@@ -53,8 +53,8 @@ body {
     font-family: 'Inter', sans-serif;
 
     color: #ffffff;
-    
-    background-color: #1E2934;
+
+    background-color: #1e2934;
 
     transition: background-color 0.3s ease-in-out;
 }
